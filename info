@@ -1,0 +1,18 @@
+'''
+Pub_size: 5.1%
+Publisher: 15.76%
+type_of_game: 7.48%
+Platform: 14.53%
+Name: 8.49%
+Game_Count: 14.97%
+GC + Pub: 15.92%
+Name + Plat: 18.79%
+GC + Pub + Name + Plat: 32.82%
+^ + TOG: 36.03%
+'''
+
+
+# Can't do publisher and name due to too many entries, but:
+# Best Predictor: Game_Count, followed by Genres: Platform, Shooter, RPG and Racing. Every other Z value is negative, 
+# with Publisher_size being a horrible predictor for medium/small companies. 
+# Game_Count seems to be our best predictor overall. 
