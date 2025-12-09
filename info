@@ -16,3 +16,6 @@ GC + Pub + Name + Plat: 32.82%
 # Best Predictor: Game_Count, followed by Genres: Platform, Shooter, RPG and Racing. Every other Z value is negative, 
 # with Publisher_size being a horrible predictor for medium/small companies. 
 # Game_Count seems to be our best predictor overall. 
+
+rf roc: AUC: .581, π* = .133, sens: .395, spec: .767
+lg roc: auc: .738, π* = .195, sens: .698, spec: .684
