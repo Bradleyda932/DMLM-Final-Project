@@ -30,15 +30,19 @@
 ### *Code Walkthrough*
 
 > I made 3 R files, one for cleaning, one for prediction and one for visualization. they will be referred to by their proper names in the following paragraphs.
+> All that is needed to run them is highlight the entire code and hit run. Do this in order of mention in this file
 
-##### fp_cleaning (df1)
+#### fp_cleaning (df1)
 
 * This dataset is all about cleaning, with comments in the code explaining what everything means. The file is called fp_cleaning.R, and the corresponding dataset is df1. At the end of the file, I like to use lapply to make sure everything looks right. The main purpose of this dataset is to setup the other datasets and make analysis easier.
-  *  All that is needed to run the code is highlight every line and hit run.
 
-### fp_prediction (df2)
+#### fp_prediction (df2)
 
 * Here is the meat and potatoes of this project. This file is about establishing parameters for prediction, setting binary variables, and preforming regression analysis. WIth df1 ready to go, at the top of this file we create df2 from df1, then modify df2 how we want. We are using a random forest and logistic regression (GLM) for prediction, using Global_Sales as our BV.
+
+
+#### fp_visuals (df3)
+* This file is dedicated to the graph and charts for the data, including: series vs standalone, highest selling genres, and clustering. This helps enhance the overall code by adding in helpful visualizations for the audience. 
 
 
 
