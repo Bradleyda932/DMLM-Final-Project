@@ -1,49 +1,90 @@
 # Data Mining and Linear Modeling: Final Project
-## ***Video Game Data: A statistical Analysis & Prediction***
+
+## **Video Game Data: A Statistical Analysis & Prediction**
+
 ---
+
 ### Bradley Antholz
+
 ---
-## *Project Overview*
-> This section will be a timeline of everything from finding the data to cleaning it and beyond.
+
+## **Project Overview**
+
+This project explores video game sales data from 1980 to 2016/2017 with the goal of identifying patterns between companies, genres, and platforms, and determining what makes a video game successful. The project includes data cleaning, variable creation, predictive modeling (Random Forest and Logistic Regression), and visualization.
+
 ---
-### *The Dataset*
-> [Video Game Sales](https://www.kaggle.com/datasets/gregorut/videogamesales?resource=download)
 
- * This dataset is from Kaggle, and thank you to Professor Follett for helping me find it. In short, it is a dataset of video games ranging from 1980 to 2016/2017 of North American, European, Japanese and total Global Sales. Included are their Publisher, Platform, Genre, and of course, Name. 
-* The overall goal of this project was to create patterns between companies and sales and see what makes a successful game, well, successful. This process will be explained in detail later on. 
+## **The Dataset**
 
+**Source:** [Video Game Sales (Kaggle)](https://www.kaggle.com/datasets/gregorut/videogamesales?resource=download)
 
-##### Cleaning Process
-  * I removed all sales columns except global sales, because I didn't feel they were needed, as global sales was the only consistent one (the others had 0's).
-  * I did not intend to remove year, however during the process ChatGPT used select(), which did that very thing. I tried to go back and fix it, but it turned out to be either very difficult or impossible, so I gave up.
-  * Despite that, I created several variables as well, which will be further explained later on.
-  * Last, I combined several entries or renamed them, as doing so made the data more consistent and easy to read. For example, I don't know about you, but I have no idea what Platform "TG16" was, so I renamed it (after looking up what it was) to "TurboGrafx-16". Along with this, I combined a few companies who had multiple branches who put out video games, such as Sony, who has listed: Sony Computer Entertainment, Sony Computer Entertainment Europe, Sony Online Entertainment, among others.
+This dataset contains global, North American, European, and Japanese sales numbers, along with game Name, Publisher, Platform, Genre, and Year.
 
-## *The Process*
-> This section will be about everything I did with the dataset after the initial cleaning phase, but up to data visualizations.
-* I created the following variables: type_of_game, Sales_Bracket, type_of_game_BV, successful_game_BV, Game_Count, Publisher_Size. Here is a detailed explanation of each one, and why they exist:
-  * **type_of_game and type_of_game_BV**: Created to distinguish between if a game was a solo title (think Pokemon Blue) or part of a larger series (think Madden).
-  * **Sales_Bracket, Publisher Size**: These were created mostly just for me and the audience, as the values of sales numbers are hard to understand, and it can be hard to know what publishers are "big" and who are not. Pub_Size is used for statistical analysis later on.
-  * **Game_Count** was created to establish Pub_Size, as we needed a threshold for what constitutes as a big or small company. To do this, the cutoffs were: Small: 5 games; Medium: 100; Big: 100+. Here is where our goals come in, we want to preform deep statistical analysis with all 3 categories of Pub_Size in order to achieve what I'm after.
-  * Last, **successful_game_BV**. This was the backbone of the entire operation, as I tested every variable against it. To establish it, though, the cutoff was at or below $1 Million in global sales = 0, above = 1.
+The project focuses on:
 
-### *Code Walkthrough*
+* Creating interpretable variables for analysis
+* Grouping companies by size
+* Predicting game success using statistical models
 
-> I made 3 R files, one for cleaning, one for prediction and one for visualization. they will be referred to by their proper names in the following paragraphs.
-> All that is needed to run them is highlight the entire code and hit run. Do this in order of mention in this file
+### **Cleaning Process**
 
-#### fp_cleaning (df1)
+* Removed regional sales columns and kept **Global_Sales**, as it was the most consistent.
+* Lost the **Year** variable due to an accidental `select()` call; restoring it would have required extensive backtracking, so it was omitted.
+* Created several new variables (detailed below) to enhance analysis.
+* Combined duplicate publisher names and renamed unclear platform abbreviations (e.g., "TG16" → "TurboGrafx-16").
 
-* This dataset is all about cleaning, with comments in the code explaining what everything means. The file is called fp_cleaning.R, and the corresponding dataset is df1. At the end of the file, I like to use lapply to make sure everything looks right. The main purpose of this dataset is to setup the other datasets and make analysis easier.
+---
 
-#### fp_prediction (df2)
+## **The Process**
 
-* Here is the meat and potatoes of this project. This file is about establishing parameters for prediction, setting binary variables, and preforming regression analysis. WIth df1 ready to go, at the top of this file we create df2 from df1, then modify df2 how we want. We are using a random forest and logistic regression (GLM) for prediction, using Global_Sales as our BV.
+This section outlines everything done after the initial cleaning phase.
 
+### **Created Variables**
 
-#### fp_visuals (df3)
-* This file is dedicated to the graph and charts for the data, including: series vs standalone, highest selling genres, and clustering. This helps enhance the overall code by adding in helpful visualizations for the audience. 
+The following variables were created to support analysis:
 
+* **type_of_game** and **type_of_game_BV**: Distinguish between standalone titles (e.g., *Pokémon Blue*) and series titles (e.g., *Madden*).
+* **Sales_Bracket**: Makes global sales numbers easier to interpret.
+* **Publisher_Size**: Categorizes companies as Small, Medium, or Big using:
 
+  * Small: ≤ 5 games
+  * Medium: ≤ 100 games
+  * Big: > 100 games
+* **Game_Count**: Number of games associated with each publisher.
+* **successful_game_BV**: Binary variable defining game success:
 
+  * ≤ $1 million global sales → 0
+  * (>) $1 million global sales → 1
 
+These variables support predictive modeling and pattern identification.
+
+---
+
+## **Code Walkthrough**
+
+The project is split into three R files. Run each in the order below.
+
+### **1. fp_cleaning (df1)**
+
+Responsible for all cleaning steps. Comments explain each transformation. Ends with an `lapply()` check to ensure variables look correct.
+
+### **2. fp_prediction (df2)**
+
+Contains the main statistical work:
+
+* Creates new binary variables
+* Performs Random Forest and Logistic Regression
+* Generates ROC curves and evaluates thresholds
+* Produces predicted success probabilities
+
+### **3. fp_visuals (df3)**
+
+Generates visualizations, including:
+
+* Series vs standalone comparisons
+* Highest-selling genres
+* Publisher clustering analysis
+
+These charts help summarize findings for presentation.
+
+---
